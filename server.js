@@ -23,7 +23,7 @@ ontime({ cycle: ['04:00:00'] }, ot => {
         if (err) return console.log(err)
 
         let $ = cheerio.load(html)
-        const newMaxPage = +$('p.pagination > a:nth-child(5)').text()
+        const newMaxPage = +$('.p > div:nth-child(3)').text().split(' ').pop()
         db.count({}, (err, count) => {
             if (err) return console.log(err)
             if (!count || !maxPage) {
@@ -51,9 +51,9 @@ ontime({ cycle: ['04:00:00'] }, ot => {
         } else {
             i++
             let $ = cheerio.load(html)
-            maxPage = maxPage || +$('p.pagination > a:nth-child(5)').text()
+            maxPage = maxPage || +$('.p > div:nth-child(3)').text().split(' ').pop()
             console.log('maxPage ' + maxPage)
-            $('.oneliner p').map((index, el) => {
+            $('.o p').map((index, el) => {
                 db.insert({joke: $(el).text()}, err => err && console.log('insert error: '+ err))
             })
         }
